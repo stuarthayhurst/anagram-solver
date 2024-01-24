@@ -12,8 +12,8 @@
   - `FAST=[true/false]`: Environment variable to enable more optimisation flags
 
 ## Usage:
-  - `./simulator [WORD FILE] [CHARACTERS]`
-    - For example, `./simulator "/usr/share/dict/words" "ananab"`
+  - `./solver [WORD FILE] [CHARACTERS]`
+    - For example, `./solver "/usr/share/dict/words" "ananab"`
   - `[WORD FILE]` must be a simple list of words in a text file, separated by new lines
     - `/usr/share/dict/words` is a good example
   - `[CHARACTERS]` must be the anagram to solve
