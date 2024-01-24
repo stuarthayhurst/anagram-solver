@@ -11,7 +11,7 @@ struct CharInfo {
 };
 
 void nextChar(std::map<char, CharInfo>* currMap, char* charList, int charCount,
-              char* currentWord, int wordLength) {
+              char* currentWord, int wordLength, bool repeat) {
   //Iterate over unique characters, recurse if progress is made on any words
   for (int i = 0; i < charCount; i++) {
     //If a word contains the current pattern, prepare and recurse
@@ -40,15 +40,37 @@ void nextChar(std::map<char, CharInfo>* currMap, char* charList, int charCount,
         std::cout << newWord << std::endl;
       }
 
-      nextChar(&charInfo->nextCharMap, charList, charCount, newWord, wordLength + 1);
+      if (repeat) {
+        nextChar(&charInfo->nextCharMap, charList, charCount, newWord, wordLength + 1, repeat);
+      } else {
+        //Filter out current character
+        char newCharList[charCount] = {0};
+        int nextIndex = 0;
+        bool hasFound = false;
+        for (int x = 0; x < charCount; x++) {
+          if (hasFound || (charList[i] != charList[x])) {
+            newCharList[nextIndex++] = charList[x];
+          } else {
+            hasFound = true;
+          }
+        }
+
+        nextChar(&charInfo->nextCharMap, newCharList, nextIndex, newWord, wordLength + 1, repeat);
+      }
     }
   }
 }
 
 int main(int argc, char* argv[]) {
-  if (argc != 3) {
-    std::cerr << "ERROR: Requires 2 arguments, exiting" << std::endl;
+  if (argc != 3 && argc != 4) {
+    std::cerr << "ERROR: Requires 2 or 3 arguments, exiting" << std::endl;
     return EXIT_FAILURE;
+  }
+
+  //Decide whether to allow repeating characters
+  bool allowRepeat = false;
+  if (argc == 4 && !std::strcmp(argv[3], "--allow-repeat")) {
+    allowRepeat = true;
   }
 
   std::map<char, CharInfo> wordMap;
@@ -86,7 +108,7 @@ int main(int argc, char* argv[]) {
     return EXIT_FAILURE;
   }
 
-  nextChar(&wordMap, argv[2], std::strlen(argv[2]), nullptr, 0);
+  nextChar(&wordMap, argv[2], std::strlen(argv[2]), nullptr, 0, allowRepeat);
 
   return EXIT_SUCCESS;
 }
