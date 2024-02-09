@@ -62,8 +62,17 @@ void nextChar(std::map<char, CharInfo>* currMap, char* charList, int charCount,
 }
 
 int main(int argc, char* argv[]) {
+  if (argc == 2) {
+    if (std::string(argv[1]) == "--help" || std::string(argv[1]) == "-h") {
+      std::cout << "Usage: solver [WORD FILE] [CHARACTERS] [--allow-repeat]" << std::endl;
+      std::cout << " - [--allow-repeat] is optional" << std::endl;
+      return EXIT_SUCCESS;
+    }
+  }
+
   if (argc != 3 && argc != 4) {
     std::cerr << "ERROR: Requires 2 or 3 arguments, exiting" << std::endl;
+    std::cerr << " - Call program with '--help' for help" << std::endl;
     return EXIT_FAILURE;
   }
 
