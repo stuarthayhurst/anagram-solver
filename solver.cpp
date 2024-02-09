@@ -80,6 +80,9 @@ int main(int argc, char* argv[]) {
   bool allowRepeat = false;
   if (argc == 4 && !std::strcmp(argv[3], "--allow-repeat")) {
     allowRepeat = true;
+  } else if (argc == 4) {
+    std::cerr << "ERROR: Unrecognised option '" << argv[3] << "', exiting" << std::endl;
+    return EXIT_FAILURE;
   }
 
   std::map<char, CharInfo> wordMap;
