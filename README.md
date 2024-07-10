@@ -3,7 +3,7 @@
 
 ## Requirements:
   - A compiler supporting `c++-20`
-  - Override the default by setting the `CXX` environment variable
+    - Override the default by setting the `CXX` environment variable
 
 ## Building:
   - `make`: Builds the solver
