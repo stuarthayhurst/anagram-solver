@@ -9,7 +9,6 @@
   - `make`: Builds the solver
   - `make clean`: Removes the compiled solver, if present
   - `DEBUG=[true/false]`: Environment variable to enable debug symbols
-  - `FAST=[true/false]`: Environment variable to enable more optimisation flags
 
 ## Usage:
   - `./solver [WORD FILE] [CHARACTERS] [--allow-repeat]`
