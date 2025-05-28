@@ -5,57 +5,59 @@
 #include <string>
 #include <map>
 
-struct CharInfo {
-  bool terminates = false;
-  std::map<char, CharInfo> nextCharMap;
-};
+namespace {
+  struct CharInfo {
+    bool terminates = false;
+    std::map<char, CharInfo> nextCharMap;
+  };
 
-void nextChar(std::map<char, CharInfo>* currMap, char* charList, int charCount,
-              char* currentWord, int wordLength, bool repeat) {
-  //Iterate over unique characters, recurse if progress is made on any words
-  for (int i = 0; i < charCount; i++) {
-    //If a word contains the current pattern, prepare and recurse
-    if (currMap->contains(charList[i])) {
-      //If the character already appeared in this loop, skip
-      bool duplicate = false;
-      for (int j = 0; j < i; j++) {
-        if (charList[i] == charList[j]) {
-          duplicate = true;
-          break;
-        }
-      }
-      if (duplicate) {
-        continue;
-      }
-
-      CharInfo* charInfo = &(*currMap)[charList[i]];
-
-      //Add character to current word, as new word
-      char newWord[wordLength + 2] = {0};
-      std::memcpy(newWord, currentWord, wordLength);
-      newWord[wordLength] = charList[i];
-
-      //If a word ends here, emit it
-      if (charInfo->terminates) {
-        std::cout << newWord << std::endl;
-      }
-
-      if (repeat) {
-        nextChar(&charInfo->nextCharMap, charList, charCount, newWord, wordLength + 1, repeat);
-      } else {
-        //Filter out current character
-        char newCharList[charCount] = {0};
-        int nextIndex = 0;
-        bool hasFound = false;
-        for (int x = 0; x < charCount; x++) {
-          if (hasFound || (charList[i] != charList[x])) {
-            newCharList[nextIndex++] = charList[x];
-          } else {
-            hasFound = true;
+  void nextChar(std::map<char, CharInfo>* currMap, char* charList, int charCount,
+                char* currentWord, int wordLength, bool repeat) {
+    //Iterate over unique characters, recurse if progress is made on any words
+    for (int i = 0; i < charCount; i++) {
+      //If a word contains the current pattern, prepare and recurse
+      if (currMap->contains(charList[i])) {
+        //If the character already appeared in this loop, skip
+        bool duplicate = false;
+        for (int j = 0; j < i; j++) {
+          if (charList[i] == charList[j]) {
+            duplicate = true;
+            break;
           }
         }
+        if (duplicate) {
+          continue;
+        }
 
-        nextChar(&charInfo->nextCharMap, newCharList, nextIndex, newWord, wordLength + 1, repeat);
+        CharInfo* charInfo = &(*currMap)[charList[i]];
+
+        //Add character to current word, as new word
+        char newWord[wordLength + 2] = {0};
+        std::memcpy(newWord, currentWord, wordLength);
+        newWord[wordLength] = charList[i];
+
+        //If a word ends here, emit it
+        if (charInfo->terminates) {
+          std::cout << newWord << std::endl;
+        }
+
+        if (repeat) {
+          nextChar(&charInfo->nextCharMap, charList, charCount, newWord, wordLength + 1, repeat);
+        } else {
+          //Filter out current character
+          char newCharList[charCount] = {0};
+          int nextIndex = 0;
+          bool hasFound = false;
+          for (int x = 0; x < charCount; x++) {
+            if (hasFound || (charList[i] != charList[x])) {
+              newCharList[nextIndex++] = charList[x];
+            } else {
+              hasFound = true;
+            }
+          }
+
+          nextChar(&charInfo->nextCharMap, newCharList, nextIndex, newWord, wordLength + 1, repeat);
+        }
       }
     }
   }
