@@ -1,4 +1,4 @@
-CFLAGS += -Wall -Wextra -Werror -std=c++20 -march=native -O3
+CFLAGS += -Wall -Wextra -Werror -Wpedantic -std=c++20 -march=native -O3
 
 ifeq ($(DEBUG),true)
   CFLAGS += -g
