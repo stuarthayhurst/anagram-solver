@@ -1,9 +1,9 @@
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
 #include <fstream>
-#include <string>
+#include <iostream>
 #include <map>
+#include <string>
 
 namespace {
   struct CharInfo {
