@@ -33,7 +33,9 @@ namespace {
 
         //Add character to current word, as new word
         char* newWord = new char[wordLength + 2]{0};
-        std::memcpy(newWord, currentWord, wordLength);
+        if (currentWord != nullptr) {
+          std::memcpy(newWord, currentWord, wordLength);
+        }
         newWord[wordLength] = charList[i];
 
         //If a word ends here, emit it
