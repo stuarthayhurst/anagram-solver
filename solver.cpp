@@ -32,7 +32,7 @@ namespace {
         CharInfo* charInfo = &(*currMap)[charList[i]];
 
         //Add character to current word, as new word
-        char newWord[wordLength + 2] = {0};
+        char* newWord = new char[wordLength + 2]{0};
         std::memcpy(newWord, currentWord, wordLength);
         newWord[wordLength] = charList[i];
 
@@ -45,7 +45,7 @@ namespace {
           nextChar(&charInfo->nextCharMap, charList, charCount, newWord, wordLength + 1, repeat);
         } else {
           //Filter out current character
-          char newCharList[charCount] = {0};
+          char* newCharList = new char[charCount]{0};
           int nextIndex = 0;
           bool hasFound = false;
           for (int x = 0; x < charCount; x++) {
@@ -57,7 +57,10 @@ namespace {
           }
 
           nextChar(&charInfo->nextCharMap, newCharList, nextIndex, newWord, wordLength + 1, repeat);
+          delete [] newCharList;
         }
+
+        delete [] newWord;
       }
     }
   }
