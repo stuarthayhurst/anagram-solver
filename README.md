@@ -8,7 +8,8 @@
 ## Building:
   - `make`: Builds the solver
   - `make clean`: Removes the compiled solver, if present
-  - `DEBUG=[true/false]`: Environment variable to enable debug symbols
+  - `DEBUG=[true/false]`: Environment variable to enable debug support
+    - Includes debug symbols, retains the frame pointer and uses sanitisers
 
 ## Usage:
   - `./solver [WORD FILE] [CHARACTERS] [--allow-repeat]`
